@@ -1,0 +1,98 @@
+# Example Docker Compose Stack
+# This is a template showing the structure and best practices
+# for creating sanitized docker-compose files
+
+version: '3.8'
+
+services:
+  # Example Service 1
+  example-app:
+    image: example/app:latest
+    container_name: example-app
+    restart: unless-stopped
+    
+    # Environment variables
+    environment:
+      - TZ=${TZ:-America/Los_Angeles}
+      - PUID=${APP_USER:-1000}
+      - PGID=${APP_GROUP:-1000}
+      # Never hardcode secrets here
+      # Use environment variables or docker secrets
+    
+    # Ports
+    ports:
+      - "${APP_PORT:-8080}:8080"
+    
+    # Volumes - use generic paths
+    volumes:
+      - ${DATA_DIR:-/data}/app:/data
+      - ${CONFIG_DIR:-/config}/app:/config
+    
+    # Network
+    networks:
+      - lan
+    
+    # Labels for Portainer/organization
+    labels:
+      - "traefik.enable=false"
+      - "com.docker.compose.project=example"
+    
+    # Health check (recommended)
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  # Example Service 2 - Database
+  example-db:
+    image: postgres:15-alpine
+    container_name: example-db
+    restart: unless-stopped
+    
+    environment:
+      - POSTGRES_DB=exampledb
+      - POSTGRES_USER=exampleuser
+      - POSTGRES_PASSWORD=${DB_PASSWORD:-change_me}
+      - TZ=${TZ:-America/Los_Angeles}
+    
+    volumes:
+      - ${DATA_DIR:-/data}/db:/var/lib/postgresql/data
+    
+    networks:
+      - lan
+    
+    # Only expose to local network, not external
+    expose:
+      - "5432"
+    
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U exampleuser"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+# Networks
+networks:
+  lan:
+    external: true
+    # Or create an internal network:
+    # driver: bridge
+    # ipam:
+    #   config:
+    #     - subnet: 172.20.0.0/16
+
+# Volumes (if creating named volumes instead of bind mounts)
+# volumes:
+#   example-data:
+#     driver: local
+
+# Notes:
+# 1. Always use environment variables for sensitive data
+# 2. Use generic paths that can be customized per deployment
+# 3. Add health checks for reliability
+# 4. Use restart policies for resilience
+# 5. Document all environment variables in .env.example
+# 6. Never commit actual .env files
+

@@ -1,0 +1,72 @@
+# Duplicati - Backup Solution
+# Cloud backup service that can backup to multiple storage providers
+
+version: '3.9'
+
+services:
+  duplicati:
+    image: lscr.io/linuxserver/duplicati:latest
+    container_name: duplicati
+    restart: unless-stopped
+
+    # Keep the container's privileges tight
+    security_opt:
+      - no-new-privileges:true
+
+    # Map a non-root UID/GID (set in .env) so files/permissions are sane
+    environment:
+      - PUID=${PUID:-1000}
+      - PGID=${PGID:-1000}
+      - TZ=${TZ:-Europe/Amsterdam}
+      # Web UI auth (put actual values in .env)
+      - DUPLICATI__WEBSERVICE_USERNAME=${DUPLICATI__WEBSERVICE_USERNAME}
+      - DUPLICATI__WEBSERVICE_PASSWORD=${DUPLICATI__WEBSERVICE_PASSWORD}
+      # Optional: encrypt Duplicati's settings database at rest
+      - SETTINGS_ENCRYPTION_KEY=${SETTINGS_ENCRYPTION_KEY}
+
+    volumes:
+      # App config & databases (persistent)
+      - ${CONFIG_DIR:-/data}/duplicati/config:/config
+      # Optional: local backup target
+      - ${BACKUP_DIR:-/data}/duplicati/backups:/backups
+      # READ-ONLY sources to back up — adjust/add as needed
+      - ${BACKUP_SOURCE:-/data}:/source:ro
+      # Example (prefer specific mounts):
+      # - /volume1/Documents:/source/Documents:ro
+      # - /volume1/Photos:/source/Photos:ro
+
+    ports:
+      - ${DUPLICATI_PORT:-8200}:8200
+
+    # Keep container FS clean & predictable
+    tmpfs:
+      - /tmp:size=256m,exec
+
+    # Healthcheck (Duplicati serves a login page on 8200)
+    healthcheck:
+      test: ["CMD", "sh", "-c", "wget -qO- http://127.0.0.1:8200/ngclient/login >/dev/null 2>&1"]
+      interval: 30s
+      timeout: 5s
+      retries: 10
+      start_period: 60s
+
+    # Cap log size so your NAS disk doesn't fill
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+    labels:
+      - "com.docker.compose.project=duplicati"
+      - "description=Backup solution with cloud storage support"
+
+# Notes:
+# 1. Set BACKUP_SOURCE to the actual path you want to backup
+# 2. Web UI accessible at http://localhost:8200
+# 3. Configure DUPLICATI__WEBSERVICE_USERNAME and PASSWORD in .env
+# 4. Optional: Set SETTINGS_ENCRYPTION_KEY to encrypt Duplicati's database
+# 5. Supports multiple storage backends (S3, OneDrive, Google Drive, etc.)
+# 6. Use /source for the main data directory
+# 7. Add more volumes as needed for additional backup sources
+# 8. All source volumes should be mounted as read-only (:ro)
