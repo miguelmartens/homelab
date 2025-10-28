@@ -4,17 +4,35 @@ This directory contains docker-compose configurations organized by category.
 
 ## 📂 Directory Structure
 
-- **monitoring/** - Monitoring and observability tools (Grafana, Prometheus, etc.)
-- **media/** - Media servers and related services (Plex, Jellyfin, etc.)
-- **development/** - Development tools and IDEs
-- **infrastructure/** - Core infrastructure services (DNS, reverse proxy, etc.)
+```
+devices/nas/docker-compose/
+├── backups/
+│   └── duplicati/           # Duplicati backup solution
+│       ├── docker-compose.yml
+│       ├── .env.example
+│       └── .gitignore
+├── infrastructure/
+│   └── tailscale/           # Tailscale VPN
+│       ├── docker-compose.yml
+│       ├── .env.example
+│       └── .gitignore
+├── monitoring/              # Monitoring stacks (Grafana, Prometheus, etc.)
+├── media/                   # Media servers (Plex, Jellyfin, etc.)
+└── development/             # Development tools and IDEs
+```
 
-## 📝 Usage
+Each service has its own subdirectory with:
+- `docker-compose.yml` - Main compose file (standard naming for better Renovate detection)
+- `.env.example` - Example environment variables
+- `.gitignore` - Protects secrets
 
-Each subdirectory should contain:
-- `docker-compose.yml` or `stack.yml` - Main compose file
+## 📝 Service Structure
+
+Each service subdirectory contains:
+- `docker-compose.yml` - Main compose file (Renovate automatically detects this naming)
 - `.env.example` - Example environment variables (required!)
-- `README.md` - Documentation specific to that stack
+- `.gitignore` - Protects `.env` files from being committed
+- Optional: `README.md` - Service-specific documentation
 
 ## 🚀 Quick Start
 
@@ -89,11 +107,12 @@ Before committing any compose file:
 
 ## 📦 Adding New Stacks
 
-1. Create a new subdirectory in the appropriate category
+1. Create a new service subdirectory (e.g., `infrastructure/nginx/`)
 2. Add `docker-compose.yml` with sanitized configuration
 3. Add `.env.example` with required variables
-4. Add a `README.md` with setup instructions
-5. Update the main README if adding a new category
+4. Add `.gitignore` to protect secrets
+5. Optional: Add service-specific `README.md` with instructions
+6. Update category README if adding to existing category
 
 ## 🧪 Testing
 
