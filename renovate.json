@@ -8,15 +8,7 @@
   "packageRules": [
     {
       "description": "Group Docker image updates for docker-compose files",
-      "matchFiles": [
-        "**/docker-compose/**/*.yml", 
-        "**/docker-compose/**/*.yaml",
-        "**/backups/*.yml",
-        "**/infrastructure/*.yml",
-        "**/monitoring/*.yml",
-        "**/media/*.yml",
-        "**/development/*.yml"
-      ],
+      "matchManagers": ["docker-compose"],
       "groupName": "Docker Compose dependencies",
       "schedule": ["on sunday"]
     },
@@ -76,15 +68,7 @@
   "gitAuthor": "Renovate Bot <noreply@github.com>",
   
   "docker-compose": {
-    "fileMatch": [
-      "**/docker-compose/**/*.yml",
-      "**/docker-compose/**/*.yaml",
-      "**/backups/*.yml",
-      "**/infrastructure/*.yml",
-      "**/monitoring/*.yml",
-      "**/media/*.yml",
-      "**/development/*.yml"
-    ]
+    "enabled": true
   },
   
   "ignorePresets": [
