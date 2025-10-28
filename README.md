@@ -12,6 +12,16 @@ All configurations in this repository are **sanitized** and safe for public cons
 
 Secrets are managed externally (e.g., Docker secrets, environment files in `.gitignore`)
 
+## 🔒 Security
+
+This repository is automatically scanned for secrets and sensitive information on every push and pull request using [Gitleaks](https://github.com/gitleaks/gitleaks-action). Any accidental commits containing secrets will be flagged and the workflow will fail.
+
+**Security checks:**
+- ✅ Automated secret scanning on every commit
+- ✅ Daily scheduled scans
+- ✅ Pull request protection
+- ✅ Placeholder values in all committed files
+
 ## 📁 Repository Structure
 
 ```

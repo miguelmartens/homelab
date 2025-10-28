@@ -24,6 +24,8 @@ services:
     # Persist only the Tailscale state directory
     volumes:
       - ${TS_STATE_DIR:-/data}/tailscale/state:/var/lib/tailscale
+      # Example: (UGOS specific)
+      # - /volume2/docker/tailscale/state:/var/lib/tailscale
 
     environment:
       # Load sensitive data from .env file next to this compose file

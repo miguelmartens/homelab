@@ -31,9 +31,10 @@ services:
       - ${BACKUP_DIR:-/data}/duplicati/backups:/backups
       # READ-ONLY sources to back up — adjust/add as needed
       - ${BACKUP_SOURCE:-/data}:/source:ro
-      # Example (prefer specific mounts):
-      # - /volume1/Documents:/source/Documents:ro
-      # - /volume1/Photos:/source/Photos:ro
+      # Example (UGOS specific):
+      # - /volume2/docker/duplicati/config:/config
+      # - /volume2/docker/duplicati/backups:/backups
+      # - /volume1:/source:ro
 
     ports:
       - ${DUPLICATI_PORT:-8200}:8200
