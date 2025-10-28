@@ -63,12 +63,7 @@ services:
       - "com.docker.compose.project=duplicati"
       - "description=Backup solution with cloud storage support"
 
-    networks:
-      - bridge
-
-networks:
-  bridge:
-    external: true
+    network_mode: bridge
 
 # Notes:
 # 1. Set BACKUP_SOURCE to the actual path you want to backup
@@ -79,4 +74,4 @@ networks:
 # 6. Use /source for the main data directory
 # 7. Add more volumes as needed for additional backup sources
 # 8. All source volumes should be mounted as read-only (:ro)
-# 9. Uses Docker's default bridge network
+# 9. Uses Docker's default bridge network (network_mode: bridge)
