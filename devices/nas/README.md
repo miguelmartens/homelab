@@ -131,6 +131,8 @@ Document your docker-compose stacks here as you add them:
 ## 📚 Resources
 
 - [Portainer Installation Guide for Ugreen NAS](https://mariushosting.com/how-to-install-portainer-on-your-ugreen-nas/)
+- [GitOps Deployment Guide](docs/GITOPS.md) - Automatic updates from Git
+- [Network Configuration Guide](docs/NETWORKS.md) - Docker networking explained
 - [UGOS Documentation](https://www.ugreen.com/support)
 - [Portainer Documentation](https://docs.portainer.io)
 - [Docker Compose Best Practices](https://docs.docker.com/compose/production/)
