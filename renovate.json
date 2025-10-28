@@ -4,32 +4,49 @@
   "extends": [
     "config:recommended"
   ],
-  
   "packageRules": [
     {
       "description": "Group Docker image updates for docker-compose files",
-      "matchManagers": ["docker-compose"],
+      "matchManagers": [
+        "docker-compose"
+      ],
       "groupName": "Docker Compose dependencies",
-      "schedule": ["on sunday"]
+      "schedule": [
+        "on sunday"
+      ]
     },
     {
       "description": "Group updates for GitHub Actions",
-      "matchFiles": [".github/workflows/*.yml", ".github/workflows/*.yaml"],
+      "matchFileNames": [
+        ".github/workflows/*.yml",
+        ".github/workflows/*.yaml"
+      ],
       "groupName": "GitHub Actions dependencies",
-      "schedule": ["on sunday"]
+      "schedule": [
+        "on sunday"
+      ]
     },
     {
       "description": "Auto-merge patch updates for Docker images",
-      "matchManagers": ["docker-compose"],
-      "matchUpdateTypes": ["patch"],
+      "matchManagers": [
+        "docker-compose"
+      ],
+      "matchUpdateTypes": [
+        "patch"
+      ],
       "automerge": true,
       "automergeType": "pr",
       "platformAutomerge": true
     },
     {
       "description": "Auto-merge minor updates for GitHub Actions",
-      "matchManagers": ["github-actions"],
-      "matchUpdateTypes": ["minor", "patch"],
+      "matchManagers": [
+        "github-actions"
+      ],
+      "matchUpdateTypes": [
+        "minor",
+        "patch"
+      ],
       "automerge": true,
       "automergeType": "pr",
       "platformAutomerge": true
@@ -42,47 +59,47 @@
         "alertmanager",
         "node-exporter"
       ],
-      "matchFiles": ["**/monitoring/**"],
+      "matchFileNames": [
+        "**/monitoring/**"
+      ],
       "groupName": "Monitoring stack",
-      "schedule": ["on sunday"]
+      "schedule": [
+        "on sunday"
+      ]
     },
     {
       "description": "Label major updates for manual review",
-      "matchUpdateTypes": ["major"],
-      "labels": ["automerge-disabled"],
+      "matchUpdateTypes": [
+        "major"
+      ],
+      "labels": [
+        "automerge-disabled"
+      ],
       "automerge": false
     }
   ],
-
-  "schedule": ["on sunday"],
-  
+  "schedule": [
+    "on sunday"
+  ],
   "timezone": "UTC",
-  
   "dependencyDashboard": true,
   "dependencyDashboardTitle": "🔧 Docker Image Updates",
-  
   "rebaseWhen": "conflicted",
-  
-  "labels": ["dependencies"],
-  
+  "labels": [
+    "dependencies"
+  ],
   "gitAuthor": "Renovate Bot <noreply@github.com>",
-  
   "docker-compose": {
     "enabled": true
   },
-  
   "ignorePresets": [
     ":prHourlyLimit2",
     ":prConcurrentLimit10"
   ],
-  
   "prConcurrentLimit": 5,
   "prHourlyLimit": 2,
-  
   "commitMessagePrefix": "chore:",
   "commitMessageSuffix": " 🔄",
-  
   "separateMajorMinor": false,
   "separateMultipleMajor": false
 }
-
