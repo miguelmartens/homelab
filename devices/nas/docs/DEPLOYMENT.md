@@ -77,6 +77,12 @@ Before deploying a stack:
 - ❌ "No such file or directory" → Folder doesn't exist, create it first
 - ❌ Container crashes on start → Verify PUID/PGID match folder owner
 
+## Deployment Methods
+
+- **[GitOps with Portainer](GITOPS.md)** - Recommended: Automatic updates from Git
+- [Manual Portainer Deployment](#manual-portainer-deployment) - One-time deployment
+- [CLI Deployment](#cli-deployment) - Via SSH and docker-compose
+
 ## Initial Setup
 
 ### 1. Access Portainer
@@ -128,13 +134,19 @@ cd /path/to/compose/files
 docker-compose up -d
 ```
 
-### Method 3: Git-Sync (Advanced)
+### Method 3: GitOps Auto-Update (Recommended)
 
-If you want to keep configurations in sync with this repo:
+Automatically sync with this repository using Portainer's GitOps feature:
 
-1. Clone this repository to your NAS
-2. Use Portainer's Git sync feature
-3. Update configurations as needed
+1. Add stack via Portainer web UI
+2. Use Git Repository as build method
+3. Enter Repository URL: `https://github.com/miguelmartens/homelab.git`
+4. Enter Compose Path: `devices/nas/docker-compose/[category]/[service]/docker-compose.yml`
+5. Enable "GitOps" and "Auto-update"
+6. Configure environment variables
+7. Deploy
+
+See [GitOps Deployment Guide](GITOPS.md) for complete instructions with screenshots.
 
 ## Managing Stacks
 

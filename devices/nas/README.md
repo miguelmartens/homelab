@@ -44,11 +44,32 @@ Example structure:
 
 See [Deployment Guide](docs/DEPLOYMENT.md#important-create-shared-folders-before-deployment) for detailed instructions.
 
-### Via Portainer
+### Deployment Methods
+
+#### Method 1: GitOps with Portainer (Recommended)
+
+Automatically keep stacks updated from this repository:
+
+1. Open Portainer and go to Stacks
+2. Add a new stack with Git repository
+3. Configure:
+   - **Repository URL:** `https://github.com/miguelmartens/homelab.git`
+   - **Compose Path:** Copy from the service path table below
+   - **Enable GitOps:** Automatically updates when repository changes
+4. Set environment variables (see `.env.example` files)
+5. Deploy
+
+See [GitOps Deployment Guide](docs/GITOPS.md) for step-by-step instructions.
+
+**Compose Paths:**
+- Duplicati: `devices/nas/docker-compose/backups/duplicati/docker-compose.yml`
+- Tailscale: `devices/nas/docker-compose/infrastructure/tailscale/docker-compose.yml`
+
+#### Method 2: Manual Portainer Deployment
 
 1. Navigate to Stacks in Portainer
 2. Click "Add stack"
-3. Choose your compose file from `docker-compose/` subdirectories
+3. Copy the compose file content manually
 4. Update the environment variables with your specific values
 5. Deploy the stack
 
