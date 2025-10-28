@@ -1,0 +1,93 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "description": "Renovate configuration for homelab repository",
+  "extends": [
+    "config:recommended"
+  ],
+  
+  "packageRules": [
+    {
+      "description": "Group Docker image updates for docker-compose files",
+      "matchFiles": ["**/docker-compose/**/*.yml", "**/docker-compose/**/*.yaml"],
+      "groupName": "Docker Compose dependencies",
+      "schedule": ["on sunday"]
+    },
+    {
+      "description": "Group updates for GitHub Actions",
+      "matchFiles": [".github/workflows/*.yml", ".github/workflows/*.yaml"],
+      "groupName": "GitHub Actions dependencies",
+      "schedule": ["on sunday"]
+    },
+    {
+      "description": "Auto-merge patch updates for Docker images",
+      "matchManagers": ["docker-compose"],
+      "matchUpdateTypes": ["patch"],
+      "automerge": true,
+      "automergeType": "pr",
+      "platformAutomerge": true
+    },
+    {
+      "description": "Auto-merge minor updates for GitHub Actions",
+      "matchManagers": ["github-actions"],
+      "matchUpdateTypes": ["minor", "patch"],
+      "automerge": true,
+      "automergeType": "pr",
+      "platformAutomerge": true
+    },
+    {
+      "description": "Group specific service updates together",
+      "matchPackageNames": [
+        "prometheus",
+        "grafana",
+        "alertmanager",
+        "node-exporter"
+      ],
+      "matchFiles": ["**/monitoring/**"],
+      "groupName": "Monitoring stack",
+      "schedule": ["on sunday"]
+    },
+    {
+      "description": "Label major updates for manual review",
+      "matchUpdateTypes": ["major"],
+      "labels": ["automerge-disabled"],
+      "automerge": false
+    }
+  ],
+
+  "schedule": ["on sunday"],
+  
+  "timezone": "UTC",
+  
+  "dependencyDashboard": true,
+  "dependencyDashboardTitle": "🔧 Docker Image Updates",
+  
+  "rebaseWhen": "conflicted",
+  
+  "labels": ["dependencies"],
+  
+  "gitAuthor": "Renovate Bot <noreply@github.com>",
+  
+  "docker-compose": {
+    "fileMatch": [
+      "**/docker-compose/*.yml",
+      "**/docker-compose/*.yaml",
+      "**/docker-compose/**/*.yml",
+      "**/docker-compose/**/*.yaml"
+    ]
+  },
+  
+  "ignorePresets": [
+    ":prHourlyLimit2",
+    ":prConcurrentLimit10"
+  ],
+  
+  "prConcurrentLimit": 5,
+  "prHourlyLimit": 2,
+  
+  "commitMessagePrefix": "chore:",
+  "commitMessageSuffix": " 🔄",
+  
+  "separateMajorMinor": false,
+  "separateMultipleMajor": false
+}
+

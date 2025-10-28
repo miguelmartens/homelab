@@ -35,14 +35,21 @@ VPN service providing secure network access using WireGuard.
 
 **Deployment:**
 
-1. Copy `tailscale.yml` to Portainer
-2. Configure environment variables in `.env`:
-   - `TS_AUTHKEY` (required)
-   - `TS_ROUTES` (adjust to your LAN subnet)
-   - `TS_STATE_DIR` (directory for state persistence)
-3. Deploy the stack
-4. Access your NAS via Tailscale network
-5. Check status: `docker exec -it tailscale tailscale status`
+⚠️ **Before deploying:**
+1. Create the state folder in UGOS File Manager:
+   - Go to Shared Folders
+   - Create: `/volume1/data/tailscale/state/` (or your chosen location)
+   - Set Read/Write permissions
+
+2. Copy `tailscale.yml` to Portainer
+3. Configure environment variables in `.env`:
+   - `TS_AUTHKEY` (required) - Get from [Tailscale Admin Console](https://login.tailscale.com/admin/settings/keys)
+   - `TS_ROUTES` (adjust to your LAN subnet, e.g., `192.168.1.0/24`)
+   - `TS_STATE_DIR` - Update to match your folder path (default: `/data`)
+   - `TS_ACCEPT_DNS=true`
+4. Deploy the stack
+5. Access your NAS via Tailscale network
+6. Check status: `docker exec -it tailscale tailscale status`
 
 **Managing Routes:**
 

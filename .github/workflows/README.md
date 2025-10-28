@@ -4,6 +4,25 @@ This directory contains GitHub Actions workflows for the homelab repository.
 
 ## Workflows
 
+### Renovate
+
+Automatic dependency updates for Docker images and GitHub Actions.
+
+**Configuration:** `renovate.json` (at repository root)
+
+**Features:**
+- Automatically creates PRs for outdated Docker images
+- Groups related updates together
+- Auto-merges patch updates (with approval)
+- Requires manual review for major version updates
+- Runs weekly on Sundays
+
+**What it updates:**
+- Docker images in all docker-compose files
+- GitHub Actions in workflow files
+
+See [Renovate Dashboard](https://github.com/apps/renovate) for activity and settings.
+
 ### Gitleaks Security Scan
 
 Automatically scans the repository for secrets and sensitive information that may have been accidentally committed.

@@ -22,6 +22,19 @@ This repository is automatically scanned for secrets and sensitive information o
 - ✅ Pull request protection
 - ✅ Placeholder values in all committed files
 
+## 🔄 Automated Updates
+
+This repository uses [Renovate](https://github.com/renovatebot/renovate) to automatically keep Docker images and dependencies up to date.
+
+**Features:**
+- 🔄 Automatic PRs for outdated Docker images
+- 📦 Groups related updates together
+- ✅ Auto-merges patch updates (when approved)
+- ⚠️ Major updates require manual review
+- 📅 Weekly update schedule (Sundays)
+
+**Setup:** Install the [Renovate GitHub App](https://github.com/apps/renovate) on your repository.
+
 ## 📁 Repository Structure
 
 ```
@@ -66,11 +79,14 @@ docker-compose up -d
 ## 📝 Adding Configurations
 
 When adding new configurations:
-1. Ensure all secrets are moved to environment files (`.env.example` provided)
-2. Replace specific paths with generic ones
-3. Use placeholder IPs and domains
-4. Update this README if adding new devices/services
-5. Document any special requirements
+1. **Create required folders in UGOS File Manager first** - Volume paths must exist before deployment
+2. Ensure all secrets are moved to environment files (`.env.example` provided)
+3. Replace specific paths with generic ones
+4. Use placeholder IPs and domains
+5. Update this README if adding new devices/services
+6. Document any special requirements
+
+See [NAS Deployment Guide](devices/nas/docs/DEPLOYMENT.md#important-create-shared-folders-before-deployment) for folder creation instructions.
 
 ## 🤝 Contributing
 
