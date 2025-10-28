@@ -60,7 +60,20 @@ Configuration files are designed to be:
 
 ## 🚀 Usage
 
-### Portainer Deployment
+### GitOps Deployment (Recommended)
+
+Automatically deploy and update stacks using Portainer's GitOps feature:
+
+1. In Portainer, add a stack from Git Repository
+2. Repository URL: `https://github.com/miguelmartens/homelab.git`
+3. Compose Path: `devices/nas/docker-compose/[category]/[service]/docker-compose.yml`
+4. Enable GitOps for automatic updates
+5. Configure environment variables
+6. Deploy
+
+See [GitOps Guide](devices/nas/docs/GITOPS.md) for detailed instructions.
+
+### Manual Deployment
 
 1. Navigate to the appropriate device directory
 2. Copy the desired `docker-compose.yml` file

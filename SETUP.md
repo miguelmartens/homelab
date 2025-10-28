@@ -48,6 +48,12 @@ No additional setup required.
    - See [NAS Deployment Guide](devices/nas/docs/DEPLOYMENT.md#important-create-shared-folders-before-deployment)
 
 3. **Deploy a Stack**
+
+   **Option A: GitOps Deployment (Recommended)**
+   - Use Portainer's GitOps feature for automatic updates
+   - See [GitOps Deployment Guide](devices/nas/docs/GITOPS.md) for step-by-step instructions
+
+   **Option B: Manual Deployment**
    - Copy a docker-compose file from `devices/nas/docker-compose/`
    - Create a `.env` file from the provided `.env.example`
    - Update environment variables with your values
