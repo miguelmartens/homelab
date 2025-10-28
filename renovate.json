@@ -8,7 +8,15 @@
   "packageRules": [
     {
       "description": "Group Docker image updates for docker-compose files",
-      "matchFiles": ["**/docker-compose/**/*.yml", "**/docker-compose/**/*.yaml"],
+      "matchFiles": [
+        "**/docker-compose/**/*.yml", 
+        "**/docker-compose/**/*.yaml",
+        "**/backups/*.yml",
+        "**/infrastructure/*.yml",
+        "**/monitoring/*.yml",
+        "**/media/*.yml",
+        "**/development/*.yml"
+      ],
       "groupName": "Docker Compose dependencies",
       "schedule": ["on sunday"]
     },
@@ -69,10 +77,13 @@
   
   "docker-compose": {
     "fileMatch": [
-      "**/docker-compose/*.yml",
-      "**/docker-compose/*.yaml",
       "**/docker-compose/**/*.yml",
-      "**/docker-compose/**/*.yaml"
+      "**/docker-compose/**/*.yaml",
+      "**/backups/*.yml",
+      "**/infrastructure/*.yml",
+      "**/monitoring/*.yml",
+      "**/media/*.yml",
+      "**/development/*.yml"
     ]
   },
   
