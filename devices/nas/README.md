@@ -24,6 +24,26 @@ nas/
 
 ## 🚀 Deployment
 
+### ⚠️ Prerequisites
+
+**IMPORTANT:** Before deploying any stack, create the necessary folders in UGOS Shared Folders.
+
+1. Open UGOS File Manager
+2. Navigate to your data volume (usually `Volume1` or `Volume2`)
+3. Create folders matching the volume paths in your compose files
+4. Set appropriate permissions (Read/Write for Docker user)
+5. Update environment variables in `.env` with correct paths
+
+Example structure:
+```
+/volume1/data/
+├── tailscale/state/
+├── duplicati/config/
+└── duplicati/backups/
+```
+
+See [Deployment Guide](docs/DEPLOYMENT.md#important-create-shared-folders-before-deployment) for detailed instructions.
+
 ### Via Portainer
 
 1. Navigate to Stacks in Portainer

@@ -32,11 +32,26 @@ Cloud backup solution supporting multiple storage providers (S3, OneDrive, Googl
 
 **Configuration:**
 
-1. Deploy the stack with Portainer
-2. Access web UI at `http://your-nas-ip:8200`
-3. Login with credentials from `.env` file
-4. Create a new backup job
-5. Configure:
+⚠️ **Before deploying:**
+1. Create necessary folders in UGOS File Manager:
+   - `/volume1/data/duplicati/config/` (for configuration)
+   - `/volume1/data/duplicati/backups/` (optional, for local backups)
+   - Source folder to backup (read-only mount)
+   - Set appropriate permissions
+
+2. Configure environment variables in `.env`:
+   - `DUPLICATI__WEBSERVICE_USERNAME`
+   - `DUPLICATI__WEBSERVICE_PASSWORD`
+   - `BACKUP_SOURCE` - Directory to backup
+   - `CONFIG_DIR` - Config directory path (default: `/data`)
+   - `BACKUP_DIR` - Backup directory path (default: `/data`)
+   - `PUID` / `PGID` - Match your NAS user
+
+3. Deploy the stack with Portainer
+4. Access web UI at `http://your-nas-ip:8200`
+5. Login with credentials from `.env` file
+6. Create a new backup job
+7. Configure:
    - Source data to backup
    - Destination storage provider
    - Backup schedule

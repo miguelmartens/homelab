@@ -7,6 +7,76 @@
 - Docker installed and configured
 - SSH or web interface access to the device
 
+## ⚠️ IMPORTANT: Create Shared Folders Before Deployment
+
+**Before deploying any stack in Portainer, you MUST create the necessary folders in UGOS Shared Folders.**
+
+Docker compose files reference volume paths (like `/data/tailscale/state` or `/data/duplicati/config`). These directories must exist on your NAS before deployment.
+
+### Steps to Create Shared Folders in UGOS
+
+1. **Open UGOS File Manager**
+   - Go to the UGOS web interface
+   - Navigate to **File Manager**
+
+2. **Navigate to Shared Folders**
+   - Open the Shared Folders section
+   - Locate your data volume (usually `Volume1`, `Volume2`, etc.)
+
+3. **Create Application Folders**
+   - Create folders for each service you plan to deploy:
+     ```
+     data/
+     ├── tailscale/
+     │   └── state/
+     ├── duplicati/
+     │   ├── config/
+     │   └── backups/
+     └── [other-services]/
+     ```
+
+4. **Set Permissions**
+   - Right-click each folder → Properties
+   - Ensure Docker/your user has Read/Write permissions
+   - Recommended: Use PUID/PGID that matches your settings (usually 1000:1000)
+
+5. **Match Compose File Paths**
+   - The folder structure should match the paths in your compose files
+   - Example: If compose uses `/data/tailscale/state`, ensure that folder exists
+   - Update environment variables in `.env` to point to these folders
+
+### Example Folder Structure
+
+For typical deployments, create:
+
+```
+/volume1/ or /volume2/
+├── docker/               # General Docker data
+│   ├── tailscale/
+│   │   └── state/
+│   ├── duplicati/
+│   │   ├── config/
+│   │   └── backups/
+│   └── portainer/        # Portainer data (if not default)
+└── [app-name]/          # Service-specific folders
+    ├── config/
+    └── data/
+```
+
+### Quick Checklist
+
+Before deploying a stack:
+- [ ] Identify all volume paths in the compose file
+- [ ] Create corresponding folders in UGOS File Manager
+- [ ] Set appropriate permissions (Read/Write for Docker user)
+- [ ] Update `.env` file with correct paths
+- [ ] Verify folders exist before deploying
+
+**Common Issues:**
+- ❌ "Permission denied" → Check folder permissions
+- ❌ "No such file or directory" → Folder doesn't exist, create it first
+- ❌ Container crashes on start → Verify PUID/PGID match folder owner
+
 ## Initial Setup
 
 ### 1. Access Portainer
