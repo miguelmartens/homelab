@@ -27,11 +27,12 @@
       ]
     },
     {
-      "description": "Auto-merge patch updates for Docker images",
+      "description": "Auto-merge patch and minor updates for Docker images",
       "matchManagers": [
         "docker-compose"
       ],
       "matchUpdateTypes": [
+        "minor",
         "patch"
       ],
       "automerge": true,
@@ -93,11 +94,10 @@
     "enabled": true
   },
   "ignorePresets": [
-    ":prHourlyLimit2",
     ":prConcurrentLimit10"
   ],
   "prConcurrentLimit": 5,
-  "prHourlyLimit": 2,
+  "prHourlyLimit": 5,
   "commitMessagePrefix": "chore:",
   "commitMessageSuffix": " 🔄",
   "separateMajorMinor": false,
