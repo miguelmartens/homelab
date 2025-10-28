@@ -99,6 +99,18 @@ See [Deployment Guide](DEPLOYMENT.md#important-create-shared-folders-before-depl
    - Get Tailscale auth key from: https://login.tailscale.com/admin/settings/keys
    - Set strong passwords for Duplicati
 
+7.5. **Create Shared Network (If Needed)**
+
+Some stacks require a shared `lan` network. To create it:
+
+1. Go to **Networks** in Portainer sidebar
+2. Click **Add network**
+3. Name: `lan`
+4. Driver: `bridge`
+5. Click **Create**
+
+This network allows containers to communicate with each other.
+
 8. **Deploy the Stack**
    - Click "Deploy the stack"
    - Portainer will clone the repository and deploy your stack
