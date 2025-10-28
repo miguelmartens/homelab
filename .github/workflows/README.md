@@ -23,6 +23,27 @@ Automatic dependency updates for Docker images and GitHub Actions.
 
 See [Renovate Dashboard](https://github.com/apps/renovate) for activity and settings.
 
+### YAML Lint
+
+Validates YAML syntax for all YAML files in the repository using the official [yamllint](https://yamllint.readthedocs.io/) tool.
+
+**Configuration:** `.yamllint.yml` (at repository root)
+
+**What it checks:**
+- YAML syntax validity
+- Indentation consistency (2 spaces)
+- Line length (max 120)
+- Proper YAML formatting
+- Comments and empty lines
+
+**Triggers:**
+- Push to main branches
+- Pull requests targeting main branches
+- Weekly scheduled runs
+- Manual trigger via workflow_dispatch
+
+**Note:** yamllint automatically detects GitHub Actions and formats output accordingly.
+
 ### Gitleaks Security Scan
 
 Automatically scans the repository for secrets and sensitive information that may have been accidentally committed.

@@ -12,15 +12,19 @@ All configurations in this repository are **sanitized** and safe for public cons
 
 Secrets are managed externally (e.g., Docker secrets, environment files in `.gitignore`)
 
-## 🔒 Security
+## 🔒 Security & Quality
 
-This repository is automatically scanned for secrets and sensitive information on every push and pull request using [Gitleaks](https://github.com/gitleaks/gitleaks-action). Any accidental commits containing secrets will be flagged and the workflow will fail.
-
-**Security checks:**
-- ✅ Automated secret scanning on every commit
+**Security Checks:**
+- ✅ Automated secret scanning with [Gitleaks](https://github.com/gitleaks/gitleaks-action)
 - ✅ Daily scheduled scans
 - ✅ Pull request protection
 - ✅ Placeholder values in all committed files
+
+**Quality Checks:**
+- ✅ YAML syntax validation with [yamllint](https://yamllint.readthedocs.io/)
+- ✅ Configurable linting rules (`.yamllint.yml`)
+- ✅ Weekly scheduled linting
+- ✅ Automatic GitHub Actions output formatting
 
 ## 🔄 Automated Updates
 
@@ -41,8 +45,15 @@ This repository uses [Renovate](https://github.com/renovatebot/renovate) to auto
 ├── devices/           # Device-specific configurations
 │   └── nas/
 │       ├── docker-compose/
-│       └── docs/
-└── services/         # Service-specific configurations
+│       │   ├── backups/
+│       │   │   └── duplicati/       # Backup solution
+│       │   └── infrastructure/
+│       │       └── tailscale/       # VPN service
+│       └── docs/                    # Deployment guides
+├── services/         # Service-specific configurations
+├── .github/          # GitHub Actions workflows
+│   └── workflows/    # CI/CD pipelines
+└── renovate.json     # Automated dependency updates
 ```
 
 ## 🖥️ Supported Devices
@@ -92,6 +103,7 @@ docker-compose up -d
 ## 📝 Adding Configurations
 
 When adding new configurations:
+
 1. **Create required folders in UGOS File Manager first** - Volume paths must exist before deployment
 2. Ensure all secrets are moved to environment files (`.env.example` provided)
 3. Replace specific paths with generic ones
@@ -100,6 +112,24 @@ When adding new configurations:
 6. Document any special requirements
 
 See [NAS Deployment Guide](devices/nas/docs/DEPLOYMENT.md#important-create-shared-folders-before-deployment) for folder creation instructions.
+
+## 🔧 Available Stacks
+
+### Backup Services
+- **Duplicati** - Cloud backup solution (S3, OneDrive, Google Drive, etc.)
+  - Path: `devices/nas/docker-compose/backups/duplicati/`
+
+### Infrastructure
+- **Tailscale** - VPN service with WireGuard
+  - Path: `devices/nas/docker-compose/infrastructure/tailscale/`
+
+## 🛠️ Workflows
+
+This repository includes automated workflows:
+
+- **Gitleaks** - Security scanning for secrets
+- **YAML Lint** - YAML syntax validation
+- **Renovate** - Automated dependency updates
 
 ## 🤝 Contributing
 
